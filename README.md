@@ -16,7 +16,7 @@ Regardless of the languages choosen for implementation, the program accepts the 
 - -a | --algorithm MergeSort | TrivialSort
 - -s | --size SIZE_INT
 
-# How to compile and run
+### How to compile and run
 - C++: 
 ```
 cd c++
