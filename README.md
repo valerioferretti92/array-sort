@@ -23,7 +23,7 @@ cd c++
 g++ Arrays.cpp -o Arrays
 ./Arrays -a MergeSort -s 100
 ```
-- nodejs: 
+- NodeJs: 
 ```
 cd nodejs
 npm install
