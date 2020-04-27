@@ -1,0 +1,16 @@
+{
+  "name": "arrays",
+  "version": "1.0.0",
+  "description": "Implmentation and comparison of sorting algorithms",
+  "main": "arrays.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node arrays.js"
+  },
+  "author": "Valerio Ferretti",
+  "license": "ISC",
+  "dependencies": {
+    "minimist": "^1.2.5",
+    "random-int": "^1.0.0"
+  }
+}
