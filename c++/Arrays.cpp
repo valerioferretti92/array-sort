@@ -33,7 +33,7 @@ int main(int argc, char** argv){
       ;
     auto result = options.parse(argc, argv);
 
-    if (result.count("help")){
+    if (result.count("h") || !result.count("a") || !result.count("s")){
       cout << options.help({"", "Group"}) << std::endl;
       exit(0);
     }
