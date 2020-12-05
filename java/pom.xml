@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.valerioferretti.arraysort</groupId>
+    <artifactId>Arrays</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mvn.compiler.plugin>3.7.0</mvn.compiler.plugin>
+        <mvn.jar.plugin>2.2</mvn.jar.plugin>
+        <picocli.version>4.5.2</picocli.version>
+        <java.version>11</java.version>
+        <appassembler.version>2.1.0</appassembler.version>
+    </properties>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+      <dependency>
+        <groupId>info.picocli</groupId>
+        <artifactId>picocli</artifactId>
+        <version>${picocli.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>info.picocli</groupId>
+        <artifactId>picocli-codegen</artifactId>
+        <version>${picocli.version}</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${mvn.compiler.plugin}</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <compilerArgs>
+              <arg>-Aproject=${project.groupId}/${project.artifactId}</arg>
+            </compilerArgs>
+          </configuration>
+        </plugin>
+  
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${mvn.jar.plugin}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+              <id>jar</id>
+            </execution>
+          </executions>
+        </plugin>
+  
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>appassembler-maven-plugin</artifactId>
+          <version>${appassembler.version}</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>assemble</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <platforms>
+              <platform>unix</platform>
+            </platforms>
+            <programs>
+              <program>
+                <mainClass>com.valerioferretti.arraysort.Arrays</mainClass>
+                <id>array-sort</id>
+              </program>
+            </programs>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+  
+
+</project>

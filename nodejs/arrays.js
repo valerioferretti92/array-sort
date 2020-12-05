@@ -25,8 +25,8 @@ function main(){
   var executionTime = calculateExcutionTime(t1, t0);
 
   if(!checkArray(myArray)){
-    console.log("ERROR: The array has not been properly sorted.");
-    return;
+    console.log("ERROR: The array has not been properly sorted");
+    process.exit(-1);
   }
 
   console.log(`Algorithm: ${algorithmName}.`);
@@ -74,9 +74,7 @@ function merge(myArray, left_low, left_high, right_low, right_high){
 
 function trivialSort(myArray){
   for(i = 0; i < myArray.length; i++){
-    indexMin = 0;
-    min = Number.MAX_SAFE_INTEGER;
-    temp = 0;
+    indexMin = 0, temp = 0, min = Number.MAX_SAFE_INTEGER;
     for(j = i; j < myArray.length; j++){
       if(myArray[j] < min){
         min = myArray[j];
@@ -136,8 +134,8 @@ function parseCommandLineInput(){
     printHelp();
   }
   if(!algorithms.includes(argv.algorithm) && !algorithms.includes(argv.a)){
-    console.log("ERROR: Invalid algorithm specified");
-    printHelp();
+    console.log("ERROR: No valid algorithm specified");
+    process.exit(-1)
   }
   return {
     algorithm: argv.algorithm || argv.a,
@@ -149,7 +147,7 @@ function printHelp(){
   console.log("\nUsage: node arrays.js <parameters>");
   console.log("\nParameters:");
   console.log("-h|--help, -a|--algorith TrivialSort|MergeSort, -s|--size\n");
-  process.exit(1);
+  process.exit(-1);
 }
 
 main();

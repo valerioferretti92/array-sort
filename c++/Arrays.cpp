@@ -58,21 +58,24 @@ int main(int argc, char** argv){
     algorithm = mergeSort;
     algorithmName = "Merge Sort";
   }else{
-    cout << "No valid algorithm specified." << endl;
-    exit(0);
+    cout << "ERROR: No valid algorithm specified" << endl;
+    exit(-1);
   }
   high_resolution_clock::time_point t1 = high_resolution_clock::now();
   (*algorithm)(myArray);
   high_resolution_clock::time_point t2 = high_resolution_clock::now();
   bool isOrdered = checkArray(myArray);
-  if(!isOrdered) cout << "An error occured" << endl;
+  if(!isOrdered) {
+    cout << "ERROR: The array has not been properly sorted" << endl;
+    exit(-1);
+  }
 
   //Printing results to stdout
   cout << "Algorithm: " << algorithmName << endl;
   cout << "Problem Size: " << arraySize << endl;
   cout << "Min Value: " << myArray[0] << endl;
   cout << "Max Value: " << myArray[arraySize - 1] << endl;
-  auto s = duration_cast<seconds>((t2 - t1) % minutes(1)).count();
+  auto s = duration_cast<seconds>((t2 - t1)).count();
   auto ms = duration_cast<milliseconds>((t2 - t1) % seconds(1)).count();
   auto us = duration_cast<microseconds>((t2 - t1) % milliseconds(1)).count();
   cout << "Execution Time: " << s << "s " << ms << "ms " << us << "us" << endl;
@@ -134,9 +137,7 @@ void merge(unsigned int myArray[], int left_low, int left_high, int right_low, i
 
 void trivialSort(unsigned int myArray[]){
   for(int i = 0; i < arraySize; i++){
-    int indexMin = 0;
-    unsigned int min = UINT_MAX;
-    int temp = 0;
+    int indexMin = 0, temp = 0, min = UINT_MAX;
     for(int j = i; j < arraySize; j++){
       if(myArray[j] < min){
         min = myArray[j];
