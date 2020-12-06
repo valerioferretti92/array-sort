@@ -24,10 +24,16 @@ public class Arrays implements Callable<Integer> {
     private static String algorithmName;
 
     @Option(names = {"-s", "--size"}, description = "Size of array to be sorted")
-    private static int arraySize;
+    private static Integer arraySize;
 
     public static void main(String... args) {
-        exit(new CommandLine(new Arrays()).execute(args));
+        CommandLine commandLine = new CommandLine(new Arrays());
+        if (algorithmName == null || arraySize == null) {
+          commandLine.usage(System.out);
+          exit(-1);
+        }
+
+        exit(commandLine.execute(args));
     }
 
     @Override
