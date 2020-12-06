@@ -6,10 +6,6 @@ import picocli.CommandLine.Option;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.Period;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalField;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -121,13 +117,13 @@ public class Arrays implements Callable<Integer> {
       int right = right_low;
       List<Integer> tempArray = new ArrayList<Integer>(length);
       for(int i = 0; i < length; i++){
-        if(left > left_high)
+        if (left > left_high) {
           tempArray.add(myArray.get(right++));
-        else if (right > right_high)
+        } else if (right > right_high) {
           tempArray.add(myArray.get(left++));
-        else if(myArray.get(left) <= myArray.get(right))
+        } else if (myArray.get(left) <= myArray.get(right)) {
           tempArray.add(myArray.get(left++));
-        else if(myArray.get(right) <= myArray.get(left))
+        } else if (myArray.get(right) <= myArray.get(left))
           tempArray.add(myArray.get(right++));
       }
 
