@@ -20,7 +20,7 @@ public class Arrays implements Callable<Integer> {
     @Option(names = {"-h", "--help"}, usageHelp = true, description = "Display this help message")
     private boolean help;
 
-    @Option(names = {"-a", "--algorithm"}, description = "Sorting algorithm to be executed")
+    @Option(names = {"-a", "--algorithm"}, description = "TrivialSort | MergeSort")
     private static String algorithmName;
 
     @Option(names = {"-s", "--size"}, description = "Size of array to be sorted")
