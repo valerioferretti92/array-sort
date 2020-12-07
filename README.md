@@ -11,7 +11,8 @@ Currently, the implemented algorithms are the following:
 The same program is implemented in the following languages:
 - C++
 - NodeJs
-- java
+- Java
+- GO
 
 Regardless of the languages choosen for implementation, the program accepts the following parameters:
 - -a | --algorithm MergeSort | TrivialSort
@@ -28,11 +29,17 @@ g++ Arrays.cpp -o Arrays
 ```
 cd nodejs
 npm install
-node arrays.js -a MergeSort -s 100
+node Arrays.js -a MergeSort -s 100
 ```
 - Java: 
 ```
 cd java
 mvn clean package
-./java/target/appassembler/bin/array-sort -a MergeSort -s 100
+./java/target/appassembler/bin/Arrays -a MergeSort -s 100
+```
+- GO (No short parameters provided): 
+```
+cd go/Arrays
+go build
+./Arrays -algorithm MergeSort -size 100
 ```
