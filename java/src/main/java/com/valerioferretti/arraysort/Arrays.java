@@ -20,20 +20,14 @@ public class Arrays implements Callable<Integer> {
     @Option(names = {"-h", "--help"}, usageHelp = true, description = "Display this help message")
     private boolean help;
 
-    @Option(names = {"-a", "--algorithm"}, description = "TrivialSort | MergeSort")
+    @Option(names = {"-a", "--algorithm"}, required = true, description = "TrivialSort | MergeSort")
     private static String algorithmName;
 
-    @Option(names = {"-s", "--size"}, description = "Size of array to be sorted")
+    @Option(names = {"-s", "--size"}, required = true, description = "Size of array to be sorted")
     private static Integer arraySize;
 
     public static void main(String... args) {
-        CommandLine commandLine = new CommandLine(new Arrays());
-        if (algorithmName == null || arraySize == null) {
-          commandLine.usage(System.out);
-          exit(-1);
-        }
-
-        exit(commandLine.execute(args));
+        exit(new CommandLine(new Arrays()).execute(args));
     }
 
     @Override

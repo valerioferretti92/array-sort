@@ -81,7 +81,7 @@
             <programs>
               <program>
                 <mainClass>com.valerioferretti.arraysort.Arrays</mainClass>
-                <id>array-sort</id>
+                <id>Arrays</id>
               </program>
             </programs>
           </configuration>
