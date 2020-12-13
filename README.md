@@ -5,7 +5,7 @@ This repository hosts the implementation of array sort algorithms. Each folder c
 Currently, the implemented algorithms are the following:
 - TrivialSort: O(n^2)
 - MergeSort: O(nlog(n))
-- InsertionSort: O(n^2) ---> *Go only*
+- InsertionSort: O(n^2)
 
 The same program is implemented in the following languages:
 - C++
@@ -14,7 +14,7 @@ The same program is implemented in the following languages:
 - GO
 
 Regardless of the languages choosen for implementation, the program accepts the following parameters:
-- -a | --algorithm MergeSort | TrivialSort ...
+- -a | --algorithm MergeSort | TrivialSort | InsertionSort
 - -s | --size SIZE_INT
 
 ### How to compile and run
