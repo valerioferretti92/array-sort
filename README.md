@@ -14,7 +14,7 @@ The same program is implemented in the following languages:
 - GO
 
 Regardless of the languages choosen for implementation, the program accepts the following parameters:
-- -a | --algorithm MergeSort | TrivialSort | InsertionSort
+- -a | --algorithm MergeSort | TrivialSort ...
 - -s | --size SIZE_INT
 
 ### How to compile and run
