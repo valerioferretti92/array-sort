@@ -12,6 +12,7 @@ using namespace std::chrono;
 void initializeArray(unsigned int myArray[]);
 bool checkArray(unsigned int myArray[]);
 void trivialSort(unsigned int myArray[]);
+void insertionSort(unsigned int myArray[]);
 void divide(unsigned int myArray[], int low, int high);
 void merge(unsigned int myArray[], int left_low, int left_high, int right_low, int right_high);
 void mergeSort(unsigned int myArray[]);
@@ -28,7 +29,8 @@ int main(int argc, char** argv){
   try{
     options.add_options()
       ("h,help","print help")
-      ("a,algorithm", "sorting algorithm (TrivialSort|MergeSort)", cxxopts::value<string>())
+      ("a,algorithm", "sorting algorithm (TrivialSort | MergeSort | InsertionSort)", 
+        cxxopts::value<string>())
       ("s,size", "array size", cxxopts::value<int>())
       ;
     auto result = options.parse(argc, argv);
@@ -57,6 +59,9 @@ int main(int argc, char** argv){
   }else if(algorithmName.compare("MergeSort") == 0){
     algorithm = mergeSort;
     algorithmName = "Merge Sort";
+  }else if(algorithmName.compare("InsertionSort") == 0){
+    algorithm = insertionSort;
+    algorithmName = "Insertion Sort";
   }else{
     cout << "ERROR: No valid algorithm specified" << endl;
     exit(-1);
@@ -148,4 +153,17 @@ void trivialSort(unsigned int myArray[]){
     myArray[i] = min;
     myArray[indexMin] = temp;
   }
+}
+
+void insertionSort(unsigned int myArray[]){
+	int val;
+	int i = 0, j = 0;
+
+	for (i = 1; i < arraySize; i++) {
+		val = myArray[i];
+		for (j = i - 1; j >= 0 && myArray[j] > val; j--) {
+			myArray[j+1] = myArray[j];
+		}
+		myArray[j+1] = val;
+	}
 }
