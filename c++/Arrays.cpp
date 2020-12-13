@@ -159,11 +159,9 @@ void trivialSort(unsigned int myArray[]){
 
 // InsertionSort: O(n^2)
 void insertionSort(unsigned int myArray[]){
-	int val;
-	int i = 0, j = 0;
-
-	for (i = 1; i < arraySize; i++) {
-		val = myArray[i];
+	for (int i = 1; i < arraySize; i++) {
+		unsigned int val = myArray[i];
+    int j = 0;
 		for (j = i - 1; j >= 0 && myArray[j] > val; j--) {
 			myArray[j+1] = myArray[j];
 		}

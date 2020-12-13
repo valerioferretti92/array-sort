@@ -145,11 +145,9 @@ func merge(myArray []uint, leftLow, leftHigh, rightLow, rightHigh int) {
 
 // Insertion Sort: O(n^2)
 func insertionSort(myArray []uint) {
-	var val uint
-	var i, j int
-
-	for i = 1; i < len(myArray); i++ {
-		val = myArray[i]
+	for i := 1; i < len(myArray); i++ {
+		val := myArray[i]
+		var j int
 		for j = i - 1; j >= 0 && myArray[j] > val; j-- {
 			myArray[j+1] = myArray[j]
 		}

@@ -163,11 +163,9 @@ function trivialSort(myArray){
 
 // InsertionSort: O(n^2)
 function insertionSort(myArray){
-	var val;
-	var i = 0, j = 0;
-
 	for (i = 1; i < myArray.length; i++) {
-		val = myArray[i];
+    let val = myArray[i];
+    let j = 0;
 		for (j = i - 1; j >= 0 && myArray[j] > val; j--) {
 			myArray[j+1] = myArray[j];
 		}

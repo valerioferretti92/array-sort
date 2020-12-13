@@ -136,11 +136,9 @@ public class Arrays implements Callable<Integer> {
   
   // InsertionSort: O(n^2)
   List<Integer> insertionSort(List<Integer> myArray){
-  	int val;
-  	int i = 0, j = 0;
-  
-  	for (i = 1; i < arraySize; i++) {
-  		val = myArray.get(i);
+  	for (int i = 1; i < arraySize; i++) {
+      int val = myArray.get(i);
+      int j = 0;
   		for (j = i - 1; j >= 0 && myArray.get(j) > val; j--) {
   			myArray.set(j+1, myArray.get(j));
   		}
