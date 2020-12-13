@@ -107,6 +107,7 @@ function printHelp(){
   process.exit(-1);
 }
 
+// MergeSort: O(nlog(n))
 function mergeSort(myArray){
   return divide(myArray, 0, myArray.length - 1);
 }
@@ -143,6 +144,7 @@ function merge(myArray, left_low, left_high, right_low, right_high){
   return myArray;
 }
 
+// TrivialSort: O(n^2)
 function trivialSort(myArray){
   for(i = 0; i < myArray.length; i++){
     indexMin = 0, temp = 0, min = Number.MAX_SAFE_INTEGER;
@@ -159,6 +161,7 @@ function trivialSort(myArray){
   return myArray;
 }
 
+// InsertionSort: O(n^2)
 function insertionSort(myArray){
 	var val;
 	var i = 0, j = 0;

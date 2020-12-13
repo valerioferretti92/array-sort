@@ -105,6 +105,7 @@ bool checkArray(unsigned int myArray[]){
   return true;
 }
 
+// MergeSort: O(nlog(n))
 void mergeSort(unsigned int myArray[]){
   divide(myArray, 0, arraySize - 1);
 }
@@ -140,6 +141,7 @@ void merge(unsigned int myArray[], int left_low, int left_high, int right_low, i
   delete [] tempArray;
 }
 
+// TrivialSort: O(n^2)
 void trivialSort(unsigned int myArray[]){
   for(int i = 0; i < arraySize; i++){
     int indexMin = 0, temp = 0, min = UINT_MAX;
@@ -155,6 +157,7 @@ void trivialSort(unsigned int myArray[]){
   }
 }
 
+// InsertionSort: O(n^2)
 void insertionSort(unsigned int myArray[]){
 	int val;
 	int i = 0, j = 0;
