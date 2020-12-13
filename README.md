@@ -1,12 +1,11 @@
 ## Sorting algorithms with different languages for learning purposes
 
-This repository hosts the implementation of array sort algorithms. Each folder contains the exact same program written with
-different languages in order to be able to compare performances and for learning purposes. The program parses the command line
-to determine the size of the array to be randomly initialized and what algorithm to apply to sort it.  
+This repository hosts the implementation of array sort algorithms. Each folder contains the exact same program written with different languages in order to be able to compare performances and for learning purposes. The program parses the command line to determine the size of the array to be randomly initialized and what algorithm to apply to sort it.  
 
 Currently, the implemented algorithms are the following:
 - TrivialSort: O(n^2)
 - MergeSort: O(nlog(n))
+- InsertionSort: O(n^2) ---> *Go only*
 
 The same program is implemented in the following languages:
 - C++
@@ -15,7 +14,7 @@ The same program is implemented in the following languages:
 - GO
 
 Regardless of the languages choosen for implementation, the program accepts the following parameters:
-- -a | --algorithm MergeSort | TrivialSort
+- -a | --algorithm MergeSort | TrivialSort | InsertionSort
 - -s | --size SIZE_INT
 
 ### How to compile and run

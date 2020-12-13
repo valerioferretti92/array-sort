@@ -28,6 +28,8 @@ func main() {
 		algorithm = trivialSort
 	} else if algorithmName == "MergeSort" {
 		algorithm = mergeSort
+	} else if algorithmName == "InsertionSort" {
+		algorithm = insertionSort
 	} else {
 		fmt.Println("ERROR: invalid algorithm specified")
 		return
@@ -51,6 +53,39 @@ func main() {
 	fmt.Printf("Execution Time: %vs %vms %vus\n", s, ms, us)
 }
 
+func checkArray(myArray []uint) bool {
+	for i := 1; i < len(myArray); i++ {
+		if myArray[i] < myArray[i-1] {
+			return false
+		}
+	}
+	return true
+}
+
+func initialize(myArray []uint) {
+	rand.Seed(time.Now().UnixNano())
+	for i := range myArray {
+		myArray[i] = uint(rand.Int())
+	}
+	return
+}
+
+func parseCmdlArgs() (string, int, error) {
+	algorithmName := flag.String("algorithm", "", "TrivialSort | MergeSort | InsertionSort")
+	arraySize := flag.Int("size", 0, "Size of the array to be sorted")
+	flag.Parse()
+
+	if *algorithmName == "" {
+		return *algorithmName, *arraySize, errors.New("flag is mandatory: -algorithm")
+	}
+	if *arraySize == 0 {
+		return *algorithmName, *arraySize, errors.New("falg is mandatory: -size")
+	}
+
+	return *algorithmName, *arraySize, nil
+}
+
+// Triavial Sort: O(n^2)
 func trivialSort(myArray []uint) {
 	for i, temp := range myArray {
 		var indexMin int
@@ -66,6 +101,7 @@ func trivialSort(myArray []uint) {
 	}
 }
 
+// Merge Sort: O(nlog(n))
 func mergeSort(myArray []uint) {
 	divide(myArray, 0, len(myArray)-1)
 }
@@ -107,34 +143,16 @@ func merge(myArray []uint, leftLow, leftHigh, rightLow, rightHigh int) {
 	}
 }
 
-func checkArray(myArray []uint) bool {
-	for i := 1; i < len(myArray); i++ {
-		if myArray[i] < myArray[i-1] {
-			return false
+// Insertion Sort: O(n^2)
+func insertionSort(myArray []uint) {
+	var val uint
+	var i, j int
+
+	for i = 1; i < len(myArray); i++ {
+		val = myArray[i]
+		for j = i - 1; j >= 0 && myArray[j] > val; j-- {
+			myArray[j+1] = myArray[j]
 		}
+		myArray[j+1] = val
 	}
-	return true
-}
-
-func initialize(myArray []uint) {
-	rand.Seed(time.Now().UnixNano())
-	for i := range myArray {
-		myArray[i] = uint(rand.Int())
-	}
-	return
-}
-
-func parseCmdlArgs() (string, int, error) {
-	algorithmName := flag.String("algorithm", "", "TrivialSort | MergeSort")
-	arraySize := flag.Int("size", 0, "Size of the array to be sorted")
-	flag.Parse()
-
-	if *algorithmName == "" {
-		return *algorithmName, *arraySize, errors.New("flag is mandatory: -algorithm")
-	}
-	if *arraySize == 0 {
-		return *algorithmName, *arraySize, errors.New("falg is mandatory: -size")
-	}
-
-	return *algorithmName, *arraySize, nil
 }
