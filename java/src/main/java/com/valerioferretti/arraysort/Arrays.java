@@ -87,14 +87,14 @@ public class Arrays implements Callable<Integer> {
 
   // BubbleSort: best / worst case teta(n^2)
   private List<Integer> bubbleSort(List<Integer> myArray) {
-  	for (int i = 0; i < arraySize-1; i++) {
-  		for (int j = arraySize - 1; j > i; j--) {
-  			if (myArray.get(j) < myArray.get(j-1)) {
+    for (int i = 0; i < arraySize-1; i++) {
+      for (int j = arraySize - 1; j > i; j--) {
+        if (myArray.get(j) < myArray.get(j-1)) {
           Integer tmp = myArray.get(j);
-  				myArray.set(j, myArray.get(j-1));
+          myArray.set(j, myArray.get(j-1));
           myArray.set(j-1, tmp);
-  			}
-  		}
+        }
+      }
     }
     return myArray;
   }
