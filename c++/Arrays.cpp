@@ -12,6 +12,7 @@ using namespace std::chrono;
 void initializeArray(unsigned int myArray[]);
 bool checkArray(unsigned int myArray[]);
 void trivialSort(unsigned int myArray[]);
+void bubbleSort(unsigned int myArray[]);
 void insertionSort(unsigned int myArray[]);
 void divide(unsigned int myArray[], int low, int high);
 void merge(unsigned int myArray[], int left_low, int left_high, int right_low, int right_high);
@@ -29,7 +30,8 @@ int main(int argc, char** argv){
   try{
     options.add_options()
       ("h,help","print help")
-      ("a,algorithm", "sorting algorithm (TrivialSort | MergeSort | InsertionSort)", 
+      ("a,algorithm", 
+        "sorting algorithm (TrivialSort | MergeSort | InsertionSort | BubbleSort)", 
         cxxopts::value<string>())
       ("s,size", "array size", cxxopts::value<int>())
       ;
@@ -62,6 +64,9 @@ int main(int argc, char** argv){
   }else if(algorithmName.compare("InsertionSort") == 0){
     algorithm = insertionSort;
     algorithmName = "Insertion Sort";
+  }else if(algorithmName.compare("BubbleSort") == 0){
+    algorithm = bubbleSort;
+    algorithmName = "Bubble Sort";
   }else{
     cout << "ERROR: No valid algorithm specified" << endl;
     exit(-1);
@@ -105,7 +110,20 @@ bool checkArray(unsigned int myArray[]){
   return true;
 }
 
-// MergeSort: O(nlog(n))
+// BubbleSort: best / worst case teta(n^2)
+void bubbleSort(unsigned int myArray[]) {
+	for (int i = 0; i < arraySize-1; i++) {
+		for (int j = arraySize - 1; j > i; j--) {
+			if (myArray[j] < myArray[j-1]) {
+        unsigned int tmp = myArray[j];
+				myArray[j] = myArray[j-1];
+        myArray[j-1] = tmp;
+			}
+		}
+	}
+}
+
+// MergeSort: best / worst case teta(nlog(n))
 void mergeSort(unsigned int myArray[]){
   divide(myArray, 0, arraySize - 1);
 }
@@ -141,7 +159,7 @@ void merge(unsigned int myArray[], int left_low, int left_high, int right_low, i
   delete [] tempArray;
 }
 
-// TrivialSort: O(n^2)
+// TrivialSort: best / worst case teta(n^2)
 void trivialSort(unsigned int myArray[]){
   for(int i = 0; i < arraySize; i++){
     int indexMin = 0, temp = 0, min = UINT_MAX;
@@ -157,7 +175,7 @@ void trivialSort(unsigned int myArray[]){
   }
 }
 
-// InsertionSort: O(n^2)
+// InsertionSort: best case teta(n), worst case O(n^2)
 void insertionSort(unsigned int myArray[]){
 	for (int i = 1; i < arraySize; i++) {
 		unsigned int val = myArray[i];

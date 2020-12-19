@@ -4,7 +4,8 @@ const randomInt = require('random-int');
 const TRIVIAL_SORT = "TrivialSort";
 const MERGE_SORT = "MergeSort";
 const INSERTION_SORT = "InsertionSort";
-const algorithms = [TRIVIAL_SORT, MERGE_SORT, INSERTION_SORT];
+const BUBBLE_SORT = "BubbleSort";
+const algorithms = [TRIVIAL_SORT, MERGE_SORT, INSERTION_SORT, BUBBLE_SORT];
 
 function main(){
   let parameters = parseCommandLineInput();
@@ -21,6 +22,9 @@ function main(){
   } else if(parameters.algorithm === INSERTION_SORT){
     algorithm = insertionSort;
     algorithmName = "Insertion Sort";
+  } else if(parameters.algorithm === BUBBLE_SORT){
+    algorithm = insertionSort;
+    algorithmName = "Bubble Sort";
   } else {
     console.log("ERROR: No valid algorithm specified.");
     process.exit(-1);
@@ -102,12 +106,25 @@ function printHelp(){
   console.log("Usage: node arrays.js <parameters>");
   console.log("\nParameters:");
   console.log(" -h|--help\n" + 
-              " -a|--algorith TrivialSort | MergeSort | InsertionSort\n" + 
+              " -a|--algorith TrivialSort | MergeSort | InsertionSort | BubbleSort\n" + 
               " -s|--size ARRAY_SIZE");
   process.exit(-1);
 }
 
-// MergeSort: O(nlog(n))
+// BubbleSort: best / worst case teta(n^2)
+function bubbleSort(myArray) {
+	for (i = 0; i < myArray.length-1; i++) {
+		for (j = myArray.length - 1; j > i; j--) {
+			if (myArray[j] < myArray[j-1]) {
+        tmp = myArray[j];
+				myArray[j] = myArray[j-1];
+        myArray[j-1] = tmp;
+			}
+		}
+	}
+}
+
+// MergeSort: best / worst case teta(nlog(n))
 function mergeSort(myArray){
   return divide(myArray, 0, myArray.length - 1);
 }
@@ -144,7 +161,7 @@ function merge(myArray, left_low, left_high, right_low, right_high){
   return myArray;
 }
 
-// TrivialSort: O(n^2)
+// TrivialSort: best / worst case teta(n^2)
 function trivialSort(myArray){
   for(i = 0; i < myArray.length; i++){
     indexMin = 0, temp = 0, min = Number.MAX_SAFE_INTEGER;
@@ -161,7 +178,7 @@ function trivialSort(myArray){
   return myArray;
 }
 
-// InsertionSort: O(n^2)
+// InsertionSort: best case teta(n), worst case teta(n^2)
 function insertionSort(myArray){
 	for (i = 1; i < myArray.length; i++) {
     let val = myArray[i];

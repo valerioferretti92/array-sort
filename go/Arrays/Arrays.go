@@ -30,6 +30,8 @@ func main() {
 		algorithm = mergeSort
 	} else if algorithmName == "InsertionSort" {
 		algorithm = insertionSort
+	} else if algorithmName == "BubbleSort" {
+		algorithm = bubbleSort
 	} else {
 		fmt.Println("ERROR: invalid algorithm specified")
 		return
@@ -71,7 +73,8 @@ func initialize(myArray []uint) {
 }
 
 func parseCmdlArgs() (string, int, error) {
-	algorithmName := flag.String("algorithm", "", "TrivialSort | MergeSort | InsertionSort")
+	algorithmName := flag.String("algorithm", "",
+		"TrivialSort | MergeSort | InsertionSort | BubbleSort")
 	arraySize := flag.Int("size", 0, "Size of the array to be sorted")
 	flag.Parse()
 
@@ -85,7 +88,7 @@ func parseCmdlArgs() (string, int, error) {
 	return *algorithmName, *arraySize, nil
 }
 
-// Triavial Sort: O(n^2)
+// Triavial Sort: best / worst case teta(n^2)
 func trivialSort(myArray []uint) {
 	for i, temp := range myArray {
 		var indexMin int
@@ -101,7 +104,18 @@ func trivialSort(myArray []uint) {
 	}
 }
 
-// Merge Sort: O(nlog(n))
+// BubbleSort: best / worst case teta(n^2)
+func bubbleSort(myArray []uint) {
+	for i := 0; i < len(myArray)-1; i++ {
+		for j := len(myArray) - 1; j > i; j-- {
+			if myArray[j] < myArray[j-1] {
+				myArray[j], myArray[j-1] = myArray[j-1], myArray[j]
+			}
+		}
+	}
+}
+
+// Merge Sort: best / worst case teta(nlog(n))
 func mergeSort(myArray []uint) {
 	divide(myArray, 0, len(myArray)-1)
 }
@@ -143,7 +157,7 @@ func merge(myArray []uint, leftLow, leftHigh, rightLow, rightHigh int) {
 	}
 }
 
-// Insertion Sort: O(n^2)
+// Insertion Sort: best case teta(n), worst case teta(n^2)
 func insertionSort(myArray []uint) {
 	for i := 1; i < len(myArray); i++ {
 		val := myArray[i]

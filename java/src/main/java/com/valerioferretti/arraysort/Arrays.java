@@ -21,7 +21,7 @@ public class Arrays implements Callable<Integer> {
   private boolean help;
   
   @Option(names = {"-a", "--algorithm"}, required = true, 
-          description = "TrivialSort | MergeSort | InsertionSort")
+          description = "TrivialSort | MergeSort | InsertionSort | BubbleSort")
   private static String algorithmName;
   
   @Option(names = {"-s", "--size"}, required = true, description = "Size of array to be sorted")
@@ -44,6 +44,8 @@ public class Arrays implements Callable<Integer> {
         algorithm = this::mergeSort;
     } else if (algorithmName.equals("InsertionSort")) {
         algorithm = this::insertionSort;
+    } else if (algorithmName.equals("BubbleSort")) {
+        algorithm = this::bubbleSort;
     } else {
         System.out.println("ERROR: No valid algorithm specified.");
         return -1;
@@ -82,8 +84,22 @@ public class Arrays implements Callable<Integer> {
         myArray.add(random.nextInt(Integer.MAX_VALUE));
     }
   }
- 
-  // TrivialSort: O(n^2)
+
+  // BubbleSort: best / worst case teta(n^2)
+  private List<Integer> bubbleSort(List<Integer> myArray) {
+  	for (int i = 0; i < arraySize-1; i++) {
+  		for (int j = arraySize - 1; j > i; j--) {
+  			if (myArray.get(j) < myArray.get(j-1)) {
+          Integer tmp = myArray.get(j);
+  				myArray.set(j, myArray.get(j-1));
+          myArray.set(j-1, tmp);
+  			}
+  		}
+    }
+    return myArray;
+  }
+
+  // TrivialSort: best / worst case teta(n^2)
   private List<Integer> trivialSort(List<Integer> myArray) {
     for(int i = 0; i < arraySize; i++){
       int indexMin = 0, temp = 0, min = Integer.MAX_VALUE;
@@ -100,7 +116,7 @@ public class Arrays implements Callable<Integer> {
     return myArray;
   }
   
-  // MergeSort: O(nlog(n))
+  // MergeSort: best / worst case teta(nlog(n))
   private List<Integer> mergeSort(List<Integer> myArray){
     divide(myArray, 0, arraySize - 1);
     return myArray;
@@ -134,7 +150,7 @@ public class Arrays implements Callable<Integer> {
     }
   }
   
-  // InsertionSort: O(n^2)
+  // InsertionSort: best case teta(n), worst case teta(n^2)
   List<Integer> insertionSort(List<Integer> myArray){
   	for (int i = 1; i < arraySize; i++) {
       int val = myArray.get(i);
