@@ -5,6 +5,7 @@
 #include <chrono>
 #include <climits>
 #include <string>
+#include <math.h>
 #include "cxxopts-2.1.2/include/cxxopts.hpp"
 using namespace std;
 using namespace std::chrono;
@@ -17,6 +18,12 @@ void insertionSort(unsigned int myArray[]);
 void divide(unsigned int myArray[], int low, int high);
 void merge(unsigned int myArray[], int left_low, int left_high, int right_low, int right_high);
 void mergeSort(unsigned int myArray[]);
+void heapSort(unsigned int myArray[]);
+void buildMaxHeap(unsigned int myArray[]);
+void maxHeapify(unsigned int myArray[], int root, int heapSize);
+int parent(int i);
+int leftChild(int i);
+int rightChild(int i);
 
 unsigned int arraySize;
 string algorithmName;
@@ -67,6 +74,9 @@ int main(int argc, char** argv){
   }else if(algorithmName.compare("BubbleSort") == 0){
     algorithm = bubbleSort;
     algorithmName = "Bubble Sort";
+  }else if(algorithmName.compare("HeapSort") == 0){
+    algorithm = heapSort;
+    algorithmName = "Heap Sort";
   }else{
     cout << "ERROR: No valid algorithm specified" << endl;
     exit(-1);
@@ -110,7 +120,7 @@ bool checkArray(unsigned int myArray[]){
   return true;
 }
 
-// BubbleSort: best / worst case teta(n^2)
+// BubbleSort: best / worst case teta(n^2) in place
 void bubbleSort(unsigned int myArray[]) {
 	for (int i = 0; i < arraySize-1; i++) {
 		for (int j = arraySize - 1; j > i; j--) {
@@ -123,7 +133,7 @@ void bubbleSort(unsigned int myArray[]) {
 	}
 }
 
-// MergeSort: best / worst case teta(nlog(n))
+// MergeSort: best / worst case teta(nlog(n)) not in place
 void mergeSort(unsigned int myArray[]){
   divide(myArray, 0, arraySize - 1);
 }
@@ -159,7 +169,7 @@ void merge(unsigned int myArray[], int left_low, int left_high, int right_low, i
   delete [] tempArray;
 }
 
-// TrivialSort: best / worst case teta(n^2)
+// TrivialSort: best / worst case teta(n^2) in place
 void trivialSort(unsigned int myArray[]){
   for(int i = 0; i < arraySize; i++){
     int indexMin = 0, temp = 0, min = UINT_MAX;
@@ -175,7 +185,7 @@ void trivialSort(unsigned int myArray[]){
   }
 }
 
-// InsertionSort: best case teta(n), worst case O(n^2)
+// InsertionSort: best case teta(n), worst case O(n^2) in place
 void insertionSort(unsigned int myArray[]){
 	for (int i = 1; i < arraySize; i++) {
 		unsigned int val = myArray[i];
@@ -185,4 +195,56 @@ void insertionSort(unsigned int myArray[]){
 		}
 		myArray[j+1] = val;
 	}
+}
+
+// HeapSort: best / worst case O(nlog(n)) in place
+void heapSort(unsigned int myArray[]) {
+	buildMaxHeap(myArray);
+	int heapSize = arraySize - 1;
+	for (int i = arraySize - 1; i > 0; i--) {
+    int tmp = myArray[0];
+    myArray[0] = myArray[i];
+		myArray[i] = tmp;
+		heapSize = heapSize - 1;
+		maxHeapify(myArray, 0, heapSize);
+	}
+}
+
+void buildMaxHeap(unsigned int myArray[]) {
+	for (int i = parent(arraySize - 1); i >= 0; i--) {
+		maxHeapify(myArray, i, arraySize-1);
+	}
+}
+
+void maxHeapify(unsigned int myArray[], int root, int heapSize) {
+	int l = 0, r = 0, largest = 0;
+
+	l = leftChild(root);
+	r = rightChild(root);
+	largest = root;
+
+	if (l <= heapSize && myArray[l] > myArray[root]) {
+		largest = l;
+	}
+	if (r <= heapSize && myArray[r] > myArray[largest]) {
+		largest = r;
+	}
+	if (largest != root) {
+    int tmp = myArray[root];
+    myArray[root] = myArray[largest];
+		myArray[largest] = tmp;
+		maxHeapify(myArray, largest, heapSize);
+	}
+}
+
+int parent(int i) {
+  return (i%2 == 0) ? i/2 - 1 : (int) floor(i / (float) 2);
+}
+
+int leftChild(int i) {
+	return i*2 + 1;
+}
+
+int rightChild(int i) {
+	return i*2 + 2;
 }

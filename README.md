@@ -3,10 +3,11 @@
 This repository hosts the implementation of array sort algorithms. Each folder contains the exact same program written with different languages in order to be able to compare performances and for learning purposes. The program parses the command line to determine the size of the array to be randomly initialized and what algorithm to apply to sort it.  
 
 Currently, the implemented algorithms are the following:
-- TrivialSort: best / worst case Θ(n^2)
-- MergeSort: best / worst case Θ(nlog(n))
-- InsertionSort: best case Θ(n), worst case Θ(n^2)
-- BubbleSort: best / worst case Θ(n^2)
+- TrivialSort: best / worst case Θ(n^2) in place
+- MergeSort: best / worst case Θ(nlog(n)) not in place
+- InsertionSort: best case Θ(n), worst case Θ(n^2) in place
+- BubbleSort: best / worst case Θ(n^2) in place
+- HeapSort: best/worst case 0(nlog(n)) in place
 
 The same program is implemented in the following languages:
 - C++
@@ -15,7 +16,7 @@ The same program is implemented in the following languages:
 - GO
 
 Regardless of the languages choosen for implementation, the program accepts the following parameters:
-- -a | --algorithm MergeSort | TrivialSort | InsertionSort | BubbleSort
+- -a | --algorithm MergeSort | TrivialSort | InsertionSort | BubbleSort | HeapSort
 - -s | --size SIZE_INT
 
 ### How to compile and run

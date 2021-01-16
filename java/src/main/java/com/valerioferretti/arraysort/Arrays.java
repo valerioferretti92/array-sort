@@ -46,6 +46,8 @@ public class Arrays implements Callable<Integer> {
         algorithm = this::insertionSort;
     } else if (algorithmName.equals("BubbleSort")) {
         algorithm = this::bubbleSort;
+    } else if (algorithmName.equals("HeapSort")) {
+        algorithm = this::heapSort;
     } else {
         System.out.println("ERROR: No valid algorithm specified.");
         return -1;
@@ -85,7 +87,7 @@ public class Arrays implements Callable<Integer> {
     }
   }
 
-  // BubbleSort: best / worst case teta(n^2)
+  // BubbleSort: best / worst case teta(n^2) in place
   private List<Integer> bubbleSort(List<Integer> myArray) {
     for (int i = 0; i < arraySize-1; i++) {
       for (int j = arraySize - 1; j > i; j--) {
@@ -99,7 +101,7 @@ public class Arrays implements Callable<Integer> {
     return myArray;
   }
 
-  // TrivialSort: best / worst case teta(n^2)
+  // TrivialSort: best / worst case teta(n^2) in place
   private List<Integer> trivialSort(List<Integer> myArray) {
     for(int i = 0; i < arraySize; i++){
       int indexMin = 0, temp = 0, min = Integer.MAX_VALUE;
@@ -116,7 +118,7 @@ public class Arrays implements Callable<Integer> {
     return myArray;
   }
   
-  // MergeSort: best / worst case teta(nlog(n))
+  // MergeSort: best / worst case teta(nlog(n)) not in place
   private List<Integer> mergeSort(List<Integer> myArray){
     divide(myArray, 0, arraySize - 1);
     return myArray;
@@ -150,7 +152,7 @@ public class Arrays implements Callable<Integer> {
     }
   }
   
-  // InsertionSort: best case teta(n), worst case teta(n^2)
+  // InsertionSort: best case teta(n), worst case teta(n^2) in place
   List<Integer> insertionSort(List<Integer> myArray){
   	for (int i = 1; i < arraySize; i++) {
       int val = myArray.get(i);
@@ -162,5 +164,57 @@ public class Arrays implements Callable<Integer> {
     }
     return myArray;
   }
-}
-  
+
+  // HeapSort: best / worst case O(nlog(n)) in place
+  List<Integer> heapSort(List<Integer> myArray) {
+  	buildMaxHeap(myArray);
+  	int heapSize = arraySize - 1;
+  	for (int i = arraySize - 1; i > 0; i--) {
+      int tmp = myArray.get(0);
+      myArray.set(0, myArray.get(i));
+  		myArray.set(i, tmp);
+  		heapSize = heapSize - 1;
+  		maxHeapify(myArray, 0, heapSize);
+    }
+    return myArray;
+  }
+
+  void buildMaxHeap(List<Integer> myArray) {
+  	for (int i = parent(myArray.size() - 1); i >= 0; i--) {
+  		maxHeapify(myArray, i, arraySize-1);
+  	}
+  }
+
+  void maxHeapify(List<Integer> myArray, int root, int heapSize) {
+  	int l = 0, r = 0, largest = 0;
+
+  	l = leftChild(root);
+  	r = rightChild(root);
+  	largest = root;
+
+  	if (l <= heapSize && myArray.get(l) > myArray.get(root)) {
+  		largest = l;
+  	}
+  	if (r <= heapSize && myArray.get(r) > myArray.get(largest)) {
+  		largest = r;
+  	}
+  	if (largest != root) {
+      int tmp = myArray.get(root);
+      myArray.set(root, myArray.get(largest));
+  		myArray.set(largest, tmp);
+  		maxHeapify(myArray, largest, heapSize);
+  	}
+  }
+
+  int parent(int i) {
+    return (i%2 == 0) ? i/2 - 1 : (int) Math.floor(i / (float) 2);
+  }
+
+  int leftChild(int i) {
+  	return i*2 + 1;
+  }
+
+  int rightChild(int i) {
+  	return i*2 + 2;
+  }
+}  

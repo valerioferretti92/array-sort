@@ -4,6 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"math"
 	"math/rand"
 	"time"
 )
@@ -32,6 +33,8 @@ func main() {
 		algorithm = insertionSort
 	} else if algorithmName == "BubbleSort" {
 		algorithm = bubbleSort
+	} else if algorithmName == "HeapSort" {
+		algorithm = heapSort
 	} else {
 		fmt.Println("ERROR: invalid algorithm specified")
 		return
@@ -88,7 +91,7 @@ func parseCmdlArgs() (string, int, error) {
 	return *algorithmName, *arraySize, nil
 }
 
-// Triavial Sort: best / worst case teta(n^2)
+// Triavial Sort: best / worst case teta(n^2) in place
 func trivialSort(myArray []uint) {
 	for i, temp := range myArray {
 		var indexMin int
@@ -115,7 +118,7 @@ func bubbleSort(myArray []uint) {
 	}
 }
 
-// Merge Sort: best / worst case teta(nlog(n))
+// Merge Sort: best / worst case teta(nlog(n)) not in place
 func mergeSort(myArray []uint) {
 	divide(myArray, 0, len(myArray)-1)
 }
@@ -157,7 +160,7 @@ func merge(myArray []uint, leftLow, leftHigh, rightLow, rightHigh int) {
 	}
 }
 
-// Insertion Sort: best case teta(n), worst case teta(n^2)
+// Insertion Sort: best case teta(n), worst case teta(n^2) in place
 func insertionSort(myArray []uint) {
 	for i := 1; i < len(myArray); i++ {
 		val := myArray[i]
@@ -167,4 +170,55 @@ func insertionSort(myArray []uint) {
 		}
 		myArray[j+1] = val
 	}
+}
+
+// HeapSort: best / worst case O(nlog(n)) in place
+func heapSort(myArray []uint) {
+	buildMaxHeap(myArray)
+	heapSize := len(myArray) - 1
+	for i := len(myArray) - 1; i > 0; i-- {
+		myArray[0], myArray[i] = myArray[i], myArray[0]
+		heapSize = heapSize - 1
+		maxHeapify(myArray, 0, heapSize)
+	}
+}
+
+func buildMaxHeap(myArray []uint) {
+	for i := parent(len(myArray) - 1); i >= 0; i-- {
+		maxHeapify(myArray, i, len(myArray)-1)
+	}
+}
+
+func maxHeapify(myArray []uint, root int, heapSize int) {
+	var l, r, largest int
+
+	l = leftChild(root)
+	r = rightChild(root)
+	largest = root
+
+	if l <= heapSize && myArray[l] > myArray[root] {
+		largest = l
+	}
+	if r <= heapSize && myArray[r] > myArray[largest] {
+		largest = r
+	}
+	if largest != root {
+		myArray[root], myArray[largest] = myArray[largest], myArray[root]
+		maxHeapify(myArray, largest, heapSize)
+	}
+}
+
+func parent(i int) int {
+	if i%2 == 0 {
+		return i/2 - 1
+	}
+	return int(math.Floor(float64(i) / float64(2)))
+}
+
+func leftChild(i int) int {
+	return i*2 + 1
+}
+
+func rightChild(i int) int {
+	return i*2 + 2
 }

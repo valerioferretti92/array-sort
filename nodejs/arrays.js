@@ -5,7 +5,8 @@ const TRIVIAL_SORT = "TrivialSort";
 const MERGE_SORT = "MergeSort";
 const INSERTION_SORT = "InsertionSort";
 const BUBBLE_SORT = "BubbleSort";
-const algorithms = [TRIVIAL_SORT, MERGE_SORT, INSERTION_SORT, BUBBLE_SORT];
+const HEAP_SORT = "HeapSort";
+const algorithms = [TRIVIAL_SORT, MERGE_SORT, INSERTION_SORT, BUBBLE_SORT, HEAP_SORT];
 
 function main(){
   let parameters = parseCommandLineInput();
@@ -25,6 +26,9 @@ function main(){
   } else if(parameters.algorithm === BUBBLE_SORT){
     algorithm = insertionSort;
     algorithmName = "Bubble Sort";
+  } else if(parameters.algorithm === HEAP_SORT){
+    algorithm = heapSort;
+    algorithmName = "Heap Sort";
   } else {
     console.log("ERROR: No valid algorithm specified.");
     process.exit(-1);
@@ -111,7 +115,7 @@ function printHelp(){
   process.exit(-1);
 }
 
-// BubbleSort: best / worst case teta(n^2)
+// BubbleSort: best / worst case teta(n^2) in place
 function bubbleSort(myArray) {
 	for (i = 0; i < myArray.length-1; i++) {
 		for (j = myArray.length - 1; j > i; j--) {
@@ -124,7 +128,7 @@ function bubbleSort(myArray) {
 	}
 }
 
-// MergeSort: best / worst case teta(nlog(n))
+// MergeSort: best / worst case teta(nlog(n)) not in place
 function mergeSort(myArray){
   return divide(myArray, 0, myArray.length - 1);
 }
@@ -161,7 +165,7 @@ function merge(myArray, left_low, left_high, right_low, right_high){
   return myArray;
 }
 
-// TrivialSort: best / worst case teta(n^2)
+// TrivialSort: best / worst case teta(n^2) in place
 function trivialSort(myArray){
   for(i = 0; i < myArray.length; i++){
     indexMin = 0, temp = 0, min = Number.MAX_SAFE_INTEGER;
@@ -178,7 +182,7 @@ function trivialSort(myArray){
   return myArray;
 }
 
-// InsertionSort: best case teta(n), worst case teta(n^2)
+// InsertionSort: best case teta(n), worst case teta(n^2) in place
 function insertionSort(myArray){
 	for (i = 1; i < myArray.length; i++) {
     let val = myArray[i];
@@ -189,6 +193,59 @@ function insertionSort(myArray){
 		myArray[j+1] = val;
   }
   return myArray;
+}
+
+// HeapSort: best / worst case O(nlog(n)) in place
+function heapSort(myArray) {
+	buildMaxHeap(myArray);
+	let heapSize = myArray.length - 1;
+	for (let i = myArray.length - 1; i > 0; i--) {
+    let tmp = myArray[0];
+    myArray[0] = myArray[i];
+		myArray[i] = tmp;
+		heapSize = heapSize - 1;
+		maxHeapify(myArray, 0, heapSize);
+  }
+  return myArray;
+}
+
+function buildMaxHeap(myArray) {
+	for (let i = parent(myArray.length - 1); i >= 0; i--) {
+		maxHeapify(myArray, i, myArray.length-1);
+	}
+}
+
+function maxHeapify(myArray, root, heapSize) {
+	let l = 0, r = 0, largest = 0;
+
+	l = leftChild(root);
+	r = rightChild(root);
+	largest = root;
+
+	if (l <= heapSize && myArray[l] > myArray[root]) {
+		largest = l;
+	}
+	if (r <= heapSize && myArray[r] > myArray[largest]) {
+		largest = r;
+	}
+	if (largest != root) {
+    let tmp = myArray[root];
+    myArray[root] = myArray[largest];
+		myArray[largest] = tmp;
+		maxHeapify(myArray, largest, heapSize);
+	}
+}
+
+function parent(i) {
+  return (i%2 == 0) ? i/2 - 1 : Math.floor(i / 2);
+}
+
+function leftChild(i) {
+	return i*2 + 1;
+}
+
+function rightChild(i) {
+	return i*2 + 2;
 }
 
 main();
