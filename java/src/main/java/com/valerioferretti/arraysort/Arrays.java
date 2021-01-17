@@ -48,6 +48,8 @@ public class Arrays implements Callable<Integer> {
         algorithm = this::bubbleSort;
     } else if (algorithmName.equals("HeapSort")) {
         algorithm = this::heapSort;
+    } else if (algorithmName.equals("QuickSort")) {
+        algorithm = this::quickSort;
     } else {
         System.out.println("ERROR: No valid algorithm specified.");
         return -1;
@@ -216,5 +218,36 @@ public class Arrays implements Callable<Integer> {
 
   int rightChild(int i) {
   	return i*2 + 2;
+  }
+
+  // QuickSort: best / worst case teta(nlog(n)) in place
+  List<Integer> quickSort(List<Integer> myArray) {
+    quickSortAlg(myArray, 0, myArray.size() - 1);
+    return myArray;
+  }
+
+  void quickSortAlg(List<Integer> myArray, int p, int r) {
+  	if (p < r) {
+  		int q = partition(myArray, p, r);
+  		quickSortAlg(myArray, p, q-1);
+  		quickSortAlg(myArray, q+1, r);
+  	}
+  }
+
+  int partition(List<Integer> myArray, int p, int r) {
+  	int x = myArray.get(r);
+  	int i = p - 1;
+  	for (int j = p; j < r; j++) {
+  		if (myArray.get(j) <= x) {
+  			i = i + 1;
+  			int tmp = myArray.get(i);
+        myArray.set(i, myArray.get(j));
+        myArray.set(j, tmp);
+  		}
+  	}
+  	int tmp = myArray.get(i+1);
+    myArray.set(i+1, myArray.get(r));
+    myArray.set(r, tmp);
+  	return i + 1;
   }
 }  

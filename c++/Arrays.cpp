@@ -24,6 +24,8 @@ void maxHeapify(unsigned int myArray[], int root, int heapSize);
 int parent(int i);
 int leftChild(int i);
 int rightChild(int i);
+void quickSort(unsigned int myArray[]);
+unsigned int partition(unsigned int myArray[], int p, int r);
 
 unsigned int arraySize;
 string algorithmName;
@@ -77,6 +79,9 @@ int main(int argc, char** argv){
   }else if(algorithmName.compare("HeapSort") == 0){
     algorithm = heapSort;
     algorithmName = "Heap Sort";
+  }else if(algorithmName.compare("QuickSort") == 0){
+    algorithm = quickSort;
+    algorithmName = "Quick Sort";
   }else{
     cout << "ERROR: No valid algorithm specified" << endl;
     exit(-1);
@@ -247,4 +252,35 @@ int leftChild(int i) {
 
 int rightChild(int i) {
 	return i*2 + 2;
+}
+
+// QuickSort: best / worst case teta(nlog(n)) in place
+void quickSort(unsigned int myArray[]) {
+  function<void(unsigned int[], int, int)> alg;
+	alg = [&alg](unsigned int myArray[], int p, int r) {
+		if (p < r) {
+			unsigned int q = partition(myArray, p, r);
+			alg(myArray, p, q-1);
+			alg(myArray, q+1, r);
+		}
+	};
+
+	alg(myArray, 0, arraySize-1);
+}
+
+unsigned int partition(unsigned int myArray[], int p, int r) {
+	unsigned int x = myArray[r];
+	int i = p - 1;
+	for (int j = p; j < r; j++) {
+		if (myArray[j] <= x) {
+			i = i + 1;
+			unsigned int tmp = myArray[i];
+      myArray[i] = myArray[j];
+      myArray[j] = tmp;
+		}
+	}
+	unsigned int tmp = myArray[i+1];
+  myArray[i+1] = myArray[r];
+  myArray[r] = tmp;
+	return i + 1;
 }

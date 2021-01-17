@@ -6,7 +6,8 @@ const MERGE_SORT = "MergeSort";
 const INSERTION_SORT = "InsertionSort";
 const BUBBLE_SORT = "BubbleSort";
 const HEAP_SORT = "HeapSort";
-const algorithms = [TRIVIAL_SORT, MERGE_SORT, INSERTION_SORT, BUBBLE_SORT, HEAP_SORT];
+const QUICK_SORT = "QuickSort";
+const algorithms = [TRIVIAL_SORT, MERGE_SORT, INSERTION_SORT, BUBBLE_SORT, HEAP_SORT, QUICK_SORT];
 
 function main(){
   let parameters = parseCommandLineInput();
@@ -29,6 +30,9 @@ function main(){
   } else if(parameters.algorithm === HEAP_SORT){
     algorithm = heapSort;
     algorithmName = "Heap Sort";
+  } else if(parameters.algorithm === QUICK_SORT){
+    algorithm = heapSort;
+    algorithmName = "Quick Sort";
   } else {
     console.log("ERROR: No valid algorithm specified.");
     process.exit(-1);
@@ -246,6 +250,37 @@ function leftChild(i) {
 
 function rightChild(i) {
 	return i*2 + 2;
+}
+
+// QuickSort: best / worst case teta(nlog(n)) in place
+function quickSort(myArray) {
+	function alg(myArray, p, r) {
+		if (p < r) {
+			q = partition(myArray, p, r);
+			alg(myArray, p, q-1);
+			alg(myArray, q+1, r);
+		}
+	};
+
+  alg(myArray, 0, arraySize-1);
+  return myArray;
+}
+
+function partition(myArray, p, r) {
+	x = myArray[r];
+	i = p - 1;
+	for (j = p; j < r; j++) {
+		if (myArray[j] <= x) {
+			i = i + 1;
+			tmp = myArray[i];
+      myArray[i] = myArray[j];
+      myArray[j] = tmp;
+		}
+	}
+	tmp = myArray[i+1];
+  myArray[i+1] = myArray[r];
+  myArray[r] = tmp;
+	return i + 1;
 }
 
 main();

@@ -8,6 +8,7 @@ Currently, the implemented algorithms are the following:
 - InsertionSort: best case Θ(n), worst case Θ(n^2) in place
 - BubbleSort: best / worst case Θ(n^2) in place
 - HeapSort: best/worst case 0(nlog(n)) in place
+- QuickSort: best/worst case Θ((nlog(n)) in place
 
 The same program is implemented in the following languages:
 - C++
@@ -16,7 +17,7 @@ The same program is implemented in the following languages:
 - GO
 
 Regardless of the languages choosen for implementation, the program accepts the following parameters:
-- -a | --algorithm MergeSort | TrivialSort | InsertionSort | BubbleSort | HeapSort
+- -a | --algorithm MergeSort | TrivialSort | InsertionSort | BubbleSort | HeapSort | QuickSort
 - -s | --size SIZE_INT
 
 ### How to compile and run

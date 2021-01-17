@@ -35,6 +35,8 @@ func main() {
 		algorithm = bubbleSort
 	} else if algorithmName == "HeapSort" {
 		algorithm = heapSort
+	} else if algorithmName == "QuickSort" {
+		algorithm = quickSort
 	} else {
 		fmt.Println("ERROR: invalid algorithm specified")
 		return
@@ -221,4 +223,31 @@ func leftChild(i int) int {
 
 func rightChild(i int) int {
 	return i*2 + 2
+}
+
+// QuickSort: best / worst case teta(nlog(n)) in place
+func quickSort(myArray []uint) {
+	var alg func([]uint, int, int)
+	alg = func(myArray []uint, p int, r int) {
+		if p < r {
+			q := partition(myArray, p, r)
+			alg(myArray, p, q-1)
+			alg(myArray, q+1, r)
+		}
+	}
+
+	alg(myArray, 0, len(myArray)-1)
+}
+
+func partition(myArray []uint, p int, r int) int {
+	x := myArray[r]
+	i := p - 1
+	for j := p; j < r; j++ {
+		if myArray[j] <= x {
+			i = i + 1
+			myArray[i], myArray[j] = myArray[j], myArray[i]
+		}
+	}
+	myArray[i+1], myArray[r] = myArray[r], myArray[i+1]
+	return i + 1
 }
