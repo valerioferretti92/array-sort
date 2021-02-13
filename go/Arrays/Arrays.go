@@ -227,10 +227,11 @@ func rightChild(i int) int {
 
 // QuickSort: best / worst case teta(nlog(n)) in place
 func quickSort(myArray []uint) {
+	rand.Seed(time.Now().UnixNano())
 	var alg func([]uint, int, int)
 	alg = func(myArray []uint, p int, r int) {
 		if p < r {
-			q := partition(myArray, p, r)
+			q := rpartition(myArray, p, r)
 			alg(myArray, p, q-1)
 			alg(myArray, q+1, r)
 		}
@@ -239,7 +240,13 @@ func quickSort(myArray []uint) {
 	alg(myArray, 0, len(myArray)-1)
 }
 
-func partition(myArray []uint, p int, r int) int {
+func rpartition(myArray []uint, p, r int) int {
+	i := uint(rand.Int())%uint(r-p+1) + uint(p)
+	myArray[i], myArray[r] = myArray[r], myArray[i]
+	return partition(myArray, p, r)
+}
+
+func partition(myArray []uint, p, r int) int {
 	x := myArray[r]
 	i := p - 1
 	for j := p; j < r; j++ {

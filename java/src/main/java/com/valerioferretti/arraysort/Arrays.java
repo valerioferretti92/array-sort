@@ -26,6 +26,8 @@ public class Arrays implements Callable<Integer> {
   
   @Option(names = {"-s", "--size"}, required = true, description = "Size of array to be sorted")
   private static Integer arraySize;
+
+  Random random = new Random();
   
   public static void main(String... args) {
       exit(new CommandLine(new Arrays()).execute(args));
@@ -83,7 +85,6 @@ public class Arrays implements Callable<Integer> {
   }
   
   private void initializeArray(List<Integer> myArray) {
-    Random random = new Random();
     for (int i = 0; i < arraySize; i++) {
         myArray.add(random.nextInt(Integer.MAX_VALUE));
     }
@@ -228,10 +229,18 @@ public class Arrays implements Callable<Integer> {
 
   void quickSortAlg(List<Integer> myArray, int p, int r) {
   	if (p < r) {
-  		int q = partition(myArray, p, r);
+  		int q = rpartition(myArray, p, r);
   		quickSortAlg(myArray, p, q-1);
   		quickSortAlg(myArray, q+1, r);
   	}
+  }
+
+  int rpartition(List<Integer> myArray, int p, int r) {
+	  int i = random.nextInt(Integer.MAX_VALUE)%(r-p+1) + p;
+    int tmp = myArray.get(i);
+    myArray.set(i, myArray.get(r));
+    myArray.set(r, tmp);
+	  return partition(myArray, p, r);
   }
 
   int partition(List<Integer> myArray, int p, int r) {

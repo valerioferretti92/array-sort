@@ -266,6 +266,14 @@ function quickSort(myArray) {
   return myArray;
 }
 
+function rpartition(myArray, p, r) {
+	let i = randomInt(p, r)
+  let tmp = myArray[i];
+  myArray[i] = myArray[r];
+  myArray[r] = tmp;
+	return partition(myArray, p, r);
+}
+
 function partition(myArray, p, r) {
 	x = myArray[r];
 	i = p - 1;

@@ -26,6 +26,7 @@ int leftChild(int i);
 int rightChild(int i);
 void quickSort(unsigned int myArray[]);
 unsigned int partition(unsigned int myArray[], int p, int r);
+unsigned int rpartition(unsigned int myArray[], int p, int r);
 
 unsigned int arraySize;
 string algorithmName;
@@ -256,16 +257,25 @@ int rightChild(int i) {
 
 // QuickSort: best / worst case teta(nlog(n)) in place
 void quickSort(unsigned int myArray[]) {
+  srand(time(NULL));
   function<void(unsigned int[], int, int)> alg;
 	alg = [&alg](unsigned int myArray[], int p, int r) {
 		if (p < r) {
-			unsigned int q = partition(myArray, p, r);
+			unsigned int q = rpartition(myArray, p, r);
 			alg(myArray, p, q-1);
 			alg(myArray, q+1, r);
 		}
 	};
 
 	alg(myArray, 0, arraySize-1);
+}
+
+unsigned int rpartition(unsigned int myArray[], int p, int r) {
+	int i = rand()%uint(r-p+1) + uint(p);
+  unsigned int tmp = myArray[i];
+  myArray[i] = myArray[r];
+  myArray[r] = tmp;
+	return partition(myArray, p, r);
 }
 
 unsigned int partition(unsigned int myArray[], int p, int r) {
